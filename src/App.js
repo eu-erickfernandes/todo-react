@@ -1,24 +1,42 @@
 import { useEffect, useState } from 'react';
-import './App.css';
+import styles from './App.module.css';
+import Formulario from './components/Formulario';
+import ListaTarefas from './components/ListaTarefas';
 
 function App() {
   const [tarefas, setTarefas] = useState([])
   
-  const [pendentes, setPendentes] = useState(0)
-  const [concluidas, setConcluidas] = useState(0)
+  // const [pendentes, setPendentes] = useState(0)
+  // const [concluidas, setConcluidas] = useState(0)
 
-  const [nome, setNome] = useState('')
+  const [titulo, setTitulo] = useState('')
+
+  const getTarefas = async () => {
+    const URL = 'http://localhost:8080/tarefas?_sort=id&_order=desc'
+
+    const dados = await fetch(URL)
+    const json = await dados.json()
+
+    setTarefas(json)
+  }
+
+  useEffect(() => {
+    getTarefas()
+
+    // getPendentes()
+    // getConcluidas()
+  }, [])
   
-  const handleNome = (evento) => {
+  const handleTitulo = (evento) => {
     const valor = evento.target.value 
-    setNome(valor)
+    setTitulo(valor)
   }
 
   const cadastraTarefa = async () => {
     const URL = 'http://localhost:8080/tarefas'
     
     const tarefa = {
-      nome: nome,
+      titulo: titulo,
       concluido: false
     }
 
@@ -44,52 +62,33 @@ function App() {
     evento.preventDefault()
     cadastraTarefa()
 
-    setNome('')
-    // getTarefas()
-  }
-
-  const getConcluidas = () => {
-    const concluidas = tarefas.filter(tarefa => tarefa.concluida).length
-    setConcluidas(concluidas) 
-  }
-
-  const getPendentes = () => {
-    const pendentes = tarefas.filter(tarefa => !tarefa.concluida).length
-    setPendentes(pendentes) 
-  }
-
-  const getTarefas = async () => {
-    const URL = 'http://localhost:8080/tarefas'
-
-    const dados = await fetch(URL)
-    const json = await dados.json()
-
-    setTarefas(json)
-  }
-
-  useEffect(() => {
+    setTitulo('')
     getTarefas()
-    getPendentes()
-    getConcluidas()
-  }, [tarefas])
+  }
+
+  // const getConcluidas = () => {
+  //   const concluidas = tarefas.filter(tarefa => tarefa.concluida).length
+  //   setConcluidas(concluidas) 
+  // }
+
+  // const getPendentes = () => {
+  //   const pendentes = tarefas.filter(tarefa => !tarefa.concluida).length
+  //   setPendentes(pendentes) 
+  // }
 
   return (
-    <div className="App">
-      <form onSubmit={ handleSubmit }>
-        <label htmlFor='campo-nome'>Nome</label>
-        <input id='campo-nome' type='text' onChange={ handleNome } value={ nome } required/>
+    <div className={ styles.App }>
+      <h1 className={ styles.titulo }>Todo List</h1>
 
-        <button>Salvar</button>
-      </form>
+      <Formulario
+        onSubmit={ handleSubmit }
+        handleTitulo={ handleTitulo }
+        titulo={ titulo }
+      />
 
-      <p>Pendentes: <span>{ pendentes }</span></p>
-      <p>Concluídas: <span>{ concluidas }</span></p>
-
-      <ul>
-        {tarefas.map((tarefa) => (
-          <li key={ tarefa.id }>{ tarefa.nome }</li>
-        ))}
-      </ul>
+      <ListaTarefas
+        tarefas={ tarefas }
+       />
     </div>
   );
 }

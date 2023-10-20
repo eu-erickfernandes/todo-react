@@ -2,58 +2,13 @@
   "tarefas": [
     {
       "id": 1,
-      "nome": "Lavar a roupa",
+      "titulo": "Lavar a roupa",
       "concluida": false
     },
     {
       "id": 2,
-      "nome": "Lavar o carro",
+      "titulo": "Lavar o carro",
       "concluida": true
-    },
-    {
-      "id": 3,
-      "nome": "Gravar vídeo",
-      "concluida": false
-    },
-    {
-      "nome": "asada",
-      "concluido": false,
-      "id": 4
-    },
-    {
-      "nome": "aaaa",
-      "concluido": false,
-      "id": 5
-    },
-    {
-      "nome": "gggggg",
-      "concluido": false,
-      "id": 6
-    },
-    {
-      "nome": "mjim",
-      "concluido": false,
-      "id": 7
-    },
-    {
-      "nome": "8484",
-      "concluido": false,
-      "id": 8
-    },
-    {
-      "nome": "njn",
-      "concluido": false,
-      "id": 9
-    },
-    {
-      "nome": "aasaas",
-      "concluido": false,
-      "id": 10
-    },
-    {
-      "nome": "45",
-      "concluido": false,
-      "id": 11
     }
   ]
 }

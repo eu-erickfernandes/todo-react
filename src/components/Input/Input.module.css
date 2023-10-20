@@ -1,0 +1,11 @@
+.input{
+    border: none;
+    flex-basis: 100%;
+    font-size: 1rem;
+    padding: .5rem;
+
+    &:is(:hover, :focus){
+        outline: 1px solid hsl(0, 0%, 20%);
+        outline-offset: -1px;
+    }
+}
