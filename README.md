@@ -1,2 +1,10 @@
 # To-do list com React
-Um pequeno projetinho para praticar React utilizando Hooks e Fetch API.
+
+## ✏ Descrição
+Uma página web que permita que o usuário crie e gerencia tarefas.
+
+## Tópicos abordados
+* CSS Modules;
+* useState;
+* useEffect;
+* Fetch API;
