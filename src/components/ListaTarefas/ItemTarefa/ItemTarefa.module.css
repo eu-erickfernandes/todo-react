@@ -1,4 +1,33 @@
 .itemTarefa{
+    align-items: center;
     border: 1px solid #c1c1c1;
+    display: flex;
+    justify-content: space-between;
     padding: 1rem;
 }
+
+    .tarefa__containerTitulo{
+        align-items: center;
+        display: flex;
+        gap: .5rem;
+    }
+
+    .tarefa__botao.apagar{
+        aspect-ratio: 1;
+        background-color: transparent;
+        border: none;
+        border-radius: 100vw;
+        cursor: pointer;
+        display: block;
+        padding: .5rem;
+        transition: .5s;
+
+        &:hover{
+            background-color: hsl(0, 0%, 90%);
+        }
+
+        &.apagar path{
+            fill: hsl(0, 60%, 50%);
+        }
+    }
+

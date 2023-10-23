@@ -4,12 +4,9 @@ import Formulario from './components/Formulario';
 import ListaTarefas from './components/ListaTarefas';
 
 function App() {
-  const [tarefas, setTarefas] = useState([])
-  
-  // const [pendentes, setPendentes] = useState(0)
-  // const [concluidas, setConcluidas] = useState(0)
+  // FUNÇÕES E ESTADOS PARA A LISTAGEM DE TAREFAS
 
-  const [titulo, setTitulo] = useState('')
+  const [tarefas, setTarefas] = useState([])
 
   const getTarefas = async () => {
     const URL = 'http://localhost:8080/tarefas?_sort=id&_order=desc'
@@ -22,15 +19,16 @@ function App() {
 
   useEffect(() => {
     getTarefas()
-
-    // getPendentes()
-    // getConcluidas()
   }, [])
   
   const handleTitulo = (evento) => {
     const valor = evento.target.value 
     setTitulo(valor)
   }
+
+  // FUNÇÕES E ESTADOS PARA O CADASTRO DE UMA TAREFA
+
+  const [titulo, setTitulo] = useState('')
 
   const cadastraTarefa = async () => {
     const URL = 'http://localhost:8080/tarefas'
@@ -66,19 +64,33 @@ function App() {
     getTarefas()
   }
 
-  // const getConcluidas = () => {
-  //   const concluidas = tarefas.filter(tarefa => tarefa.concluida).length
-  //   setConcluidas(concluidas) 
-  // }
+  // FUNÇÕES PARA APAGAR UMA TAREFA
 
-  // const getPendentes = () => {
-  //   const pendentes = tarefas.filter(tarefa => !tarefa.concluida).length
-  //   setPendentes(pendentes) 
-  // }
+  const apagarTarefa = async (id) => {
+    const URL = `http://localhost:8080/tarefas/${id}`
+
+    try{
+      const response = await fetch(URL, {
+        method: 'DELETE'
+      })
+
+      const resultado = await response.json()
+
+      console.log(resultado)
+    }catch(erro){
+      console.log(erro)
+    }
+  }
+
+  const handleApagar = (id) => {
+    apagarTarefa(id)
+
+    getTarefas()
+  }
 
   return (
     <div className={ styles.App }>
-      <h1 className={ styles.titulo }>Todo List</h1>
+      <h1 className={ styles.titulo }>To-do List 📝</h1>
 
       <Formulario
         onSubmit={ handleSubmit }
@@ -86,9 +98,16 @@ function App() {
         titulo={ titulo }
       />
 
-      <ListaTarefas
+      { tarefas.length > 0 &&
+        <ListaTarefas
         tarefas={ tarefas }
-       />
+        handleApagar={ handleApagar }
+        />
+      }
+
+      { tarefas.length === 0 && 
+        <span className={ styles.mensagemVazia }>Nenhuma tarefa. Adicione suas tarefas.</span>
+      }
     </div>
   );
 }
